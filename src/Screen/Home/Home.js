@@ -1,10 +1,10 @@
 import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
-import React, { useState, useEffect, useCallback, } from 'react';
+import React, { useState, useCallback, } from 'react';
 import { useAuth } from '../../Hook/Auth/useAuth';
 import { UserStorage } from '../../store/Store';
 import { scale } from 'react-native-size-matters';
 import Pagination from '../../Component/pagenation/Pagination';
-import { department, styleConsole } from '../../util/helper/Helper';
+import { styleConsole } from '../../util/helper/Helper';
 import AllColor from '../../util/color/Color';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
@@ -20,6 +20,8 @@ const Home = () => {
 
 
     const token = UserStorage.getItem("token");
+    // styleConsole("🚀 ~ Home.js:23 ~ Home ~ token:", "token", token)
+
 
 
 

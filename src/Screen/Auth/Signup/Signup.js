@@ -14,6 +14,7 @@ import { navigate } from '../../../navigator/NavigationREF/NavigationRef';
 import AllColor from '../../../util/color/Color';
 import { userRegister } from '../../../service/api/login/UserLogin';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 // Initial state for the form
 const initialState = {
@@ -38,6 +39,8 @@ const reducer = (state, action) => {
 };
 
 const Signup = () => {
+    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
+
     const [state, dispatch] = useReducer(reducer, initialState);
     const insets = useSafeAreaInsets()
 
@@ -118,6 +121,15 @@ const Signup = () => {
 
                 </ScrollView>
             </KeyboardAvoidingView>
+            <View style={[styles.addContainer,]}>
+                <BannerAd
+                    unitId={adUnitId}
+                    size={BannerAdSize.ADAPTIVE_BANNER}
+                    requestOptions={{
+                        requestNonPersonalizedAdsOnly: true,
+                    }}
+                />
+            </View>
         </View>
     );
 };
@@ -136,5 +148,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: scale(10),
         paddingHorizontal: scale(20),
+    },
+    addContainer: {
+        position: "absolute",
+        bottom: scale(33)
     }
 });

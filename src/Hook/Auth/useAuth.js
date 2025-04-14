@@ -460,6 +460,26 @@ export const useAuth = () => {
     };
 
 
+    const tokenRefresh = async (refresh_token) => {
+        setLoading(true);
+        try {
+            const { data } = await axios.post(`${BASE_URL}auth/refreshToken`, { refresh_token },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            return data;
+        } catch (error) {
+            console.log("🚀 ~ useAuth.js:475 ~ tokenRefresh ~ error:", error)
+            return error.response?.data || { message: "An unexpected error occurred || port is wrong" };
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
     return {
         userLogin,
         userRegister,
@@ -484,6 +504,7 @@ export const useAuth = () => {
         GetShoe,
         deleteShoes,
         deleteGoggle,
-        updateLockerById
+        updateLockerById,
+        tokenRefresh
     };
 };

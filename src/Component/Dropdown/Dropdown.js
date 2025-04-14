@@ -42,45 +42,6 @@ const Dropdown = ({ data, setSelected, selected, Department = null, DepaEmp = "S
                 <Icon IconCategoryName="Entypo" IconName={clicked ? "triangle-up" : "triangle-down"} size={scale(20)} />
             </TouchableOpacity>
 
-            {/* {
-                clicked && (
-                    <View style={styles.Dropdown_container}>
-                        <TextInput
-                            ref={inputRef}
-                            placeholder="Search .."
-                            value={search}
-                            onChangeText={setSearch}
-                            placeholderTextColor={AllColor.gray}
-                            style={[styles.textInput, { borderColor: isFocus ? AllColor.Androidgreen : AllColor.gray }]}
-                            accessible={true}
-                            accessibilityLabel="Search Input"
-                            onFocus={() => setisFocus(true)}
-                            onBlur={() => setisFocus(false)}
-                        />
-                        <FlatList
-                            contentContainerStyle={{ paddingBottom: scale(10) }}
-                            data={filteredData}
-                            keyExtractor={(item, index) => item.department + index}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={styles.list}
-                                    onPress={() => {
-                                        setSelected(item.department);
-                                        setClicked(false);
-                                        setSearch('');
-                                        setisFocus(false);
-                                    }}
-                                    accessible={true}
-                                    accessibilityLabel={`Select ${item.department}`}
-                                >
-                                    <Text style={styles.listText}>{item.department}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </View>
-                )
-            } */}
-
 
             {
                 clicked && (

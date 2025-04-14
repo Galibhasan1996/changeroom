@@ -2,10 +2,10 @@ import { Platform } from "react-native";
 import { launchCamera } from "react-native-image-picker";
 import Toast from "react-native-toast-message";
 const MID = 211
-const PORT = 39
+const PORT = 27
 // -----------for real device---------------
-export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `http://10.0.2.2:3000/api/v1/`
-// export const BASE_URL = `https://changeroom-backend-galibhasan1996s-projects.vercel.app/api/v1/`
+export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `https://changeroombackend.onrender.com/api/v1/`
+// export const BASE_URL = `https://changeroombackend.onrender.com/api/v1/`
 
 
 export const styleConsole = (message, WhatCall, ...data) => {

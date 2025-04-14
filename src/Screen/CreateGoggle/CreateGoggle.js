@@ -5,14 +5,18 @@ import Button from '../../Component/Button/Button';
 import { InputGoggle, getInitialStateCreateGoggle, reducerForUpdate, } from '../../Component/Input/inputData/InputData';
 import BasicHeader from '../../Component/Header/BasicHeader/BasicHeader';
 import { validateGoggle, } from '../../util/helper/validation/Validation';
-import { showToast, styleConsole } from '../../util/helper/Helper';
+import { showToast, } from '../../util/helper/Helper';
 import { goBack, } from '../../navigator/NavigationREF/NavigationRef';
 import CustomText from '../../Component/Text/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AllColor from '../../util/color/Color';
 import { useAuth } from '../../Hook/Auth/useAuth';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const CreateGoggle = () => {
+
+    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
+
     const insets = useSafeAreaInsets();
 
     const [state, dispatch] = useReducer(reducerForUpdate, getInitialStateCreateGoggle());
@@ -107,7 +111,16 @@ const CreateGoggle = () => {
                                         handleUpdateLocker()
                                     }}
                                 />
+
+                                <BannerAd
+                                    unitId={adUnitId}
+                                    size={BannerAdSize.ADAPTIVE_BANNER}
+                                    requestOptions={{
+                                        requestNonPersonalizedAdsOnly: true,
+                                    }}
+                                />
                             </ScrollView>
+
                     }
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>

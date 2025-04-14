@@ -1,18 +1,22 @@
-import React, { useCallback, useReducer, useState, } from 'react';
+import React, { useCallback, useReducer, } from 'react';
 import { KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Input from '../../Component/Input/Input';
 import Button from '../../Component/Button/Button';
 import { InputShoe, getInitialStateCreateShoe, reducerForUpdate, } from '../../Component/Input/inputData/InputData';
 import BasicHeader from '../../Component/Header/BasicHeader/BasicHeader';
 import { validateShoe, } from '../../util/helper/validation/Validation';
-import { showToast, styleConsole, department, employer } from '../../util/helper/Helper';
+import { showToast } from '../../util/helper/Helper';
 import { goBack, } from '../../navigator/NavigationREF/NavigationRef';
 import CustomText from '../../Component/Text/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../../Hook/Auth/useAuth';
 import AllColor from '../../util/color/Color';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const CreateShoe = () => {
+    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
+
+
     const insets = useSafeAreaInsets();
 
     const [state, dispatch] = useReducer(reducerForUpdate, getInitialStateCreateShoe());
@@ -94,6 +98,14 @@ const CreateShoe = () => {
                             borderradius={10}
                             onPress={() => {
                                 handleUpdateLocker()
+                            }}
+                        />
+
+                        <BannerAd
+                            unitId={adUnitId}
+                            size={BannerAdSize.ADAPTIVE_BANNER}
+                            requestOptions={{
+                                requestNonPersonalizedAdsOnly: true,
                             }}
                         />
                     </ScrollView>

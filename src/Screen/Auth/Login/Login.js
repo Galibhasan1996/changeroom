@@ -14,8 +14,10 @@ import { validateLogin } from '../../../util/helper/validation/Validation'
 import { useAuth } from '../../../Hook/Auth/useAuth'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { width } from '../../../Hook/Style/Style'
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const Login = () => {
+    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
 
     const { error, loading, userLogin } = useAuth()
     const insets = useSafeAreaInsets()
@@ -57,6 +59,7 @@ const Login = () => {
             showToast('success', data.message, data.message)
 
             UserStorage.setItem("token", data.token)
+            UserStorage.setItem("refresh_token", data.refresh_token)
             UserStorage.setItem("_id", data.user._id)
             UserStorage.setItem("name", data.user.name)
             UserStorage.setItem("email", data.user.email)
@@ -140,6 +143,15 @@ const Login = () => {
                             <CustomText variant='h6' Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Signup "}</CustomText>
                         </TouchableOpacity>
                     </View>
+                    <View style={[styles.addContainer,]}>
+                        <BannerAd
+                            unitId={adUnitId}
+                            size={BannerAdSize.ADAPTIVE_BANNER}
+                            requestOptions={{
+                                requestNonPersonalizedAdsOnly: true,
+                            }}
+                        />
+                    </View>
                 </View>
             </PanGestureHandler>
         </GestureHandlerRootView>
@@ -164,6 +176,10 @@ const styles = StyleSheet.create({
         width: width * 0.5,
         height: width * 0.5,
         resizeMode: "contain"
+    },
+    addContainer: {
+        position: "absolute",
+        bottom: scale(33)
     }
 })
 
