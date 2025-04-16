@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet, TouchableOpacity, View, } from 'react-native'
+import { Image, StatusBar, StyleSheet, TouchableOpacity, View, } from 'react-native'
 import React, { useState, } from 'react'
 import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
 import { scale } from 'react-native-size-matters'
@@ -9,6 +9,8 @@ import CustomText from '../../../../Component/Text/Text'
 import { navigate } from '../../../../navigator/NavigationREF/NavigationRef'
 import AllColor from '../../../../util/color/Color'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import AdBanner from '../../../../Component/AdBanner/AdBanner'
+import { width } from '../../../../Hook/Style/Style'
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("")
@@ -23,10 +25,11 @@ const AdminLogin = () => {
 
 
     return (
-        <View style={[styles.container, { marginTop: insets.top }]}>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
             <BasicHeader></BasicHeader>
             <StatusBar barStyle={"dark-content"}></StatusBar>
             <CustomText variant='h1' fontSize={30} style={{ fontWeight: 'bold', marginTop: scale(20), }}>{"Admin Login"}</CustomText>
+            <Image source={require("../../../../util/image/login.png")} style={styles.logInImage}></Image>
 
             {/* --------------input-------------- */}
             <Input
@@ -78,10 +81,10 @@ const AdminLogin = () => {
                 <TouchableOpacity onPress={() => {
                     navigate("AdminSignup")
                 }}>
-                    <CustomText variant={"h6"} Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Admin Signup"}</CustomText>
+                    <CustomText variant={"h6"} Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Admin Signup ! "}</CustomText>
                 </TouchableOpacity>
             </View>
-
+            <AdBanner containerStyle={{ position: 'absolute', bottom: insets.bottom }}></AdBanner>
         </View>
     )
 }
@@ -100,6 +103,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginVertical: scale(10),
         paddingHorizontal: scale(20)
+    },
+    logInImage: {
+        width: width * 0.5,
+        height: width * 0.5,
+        resizeMode: "contain"
     }
 })
 

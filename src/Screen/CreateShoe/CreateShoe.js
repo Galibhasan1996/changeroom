@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, } from 'react';
-import { KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, View, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
 import Input from '../../Component/Input/Input';
 import Button from '../../Component/Button/Button';
 import { InputShoe, getInitialStateCreateShoe, reducerForUpdate, } from '../../Component/Input/inputData/InputData';
@@ -11,10 +11,9 @@ import CustomText from '../../Component/Text/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../../Hook/Auth/useAuth';
 import AllColor from '../../util/color/Color';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import AdBanner from '../../Component/AdBanner/AdBanner';
 
 const CreateShoe = () => {
-    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
 
 
     const insets = useSafeAreaInsets();
@@ -40,8 +39,6 @@ const CreateShoe = () => {
             if (data.message === "shoe created successfully") {
                 showToast("success", data.message, data.message);
                 dispatch({ type: 'RESET' });
-                setSelectedDepartment('');
-                setSelectedEmployer('');
                 goBack()
             } else if (data.errors && Array.isArray(data.errors)) {
                 showToast("error", data.errors[0]?.msg || "An error occurred", data.errors[0]?.msg || "Error");
@@ -66,23 +63,25 @@ const CreateShoe = () => {
                     <ScrollView >
 
                         {/* Input Fields */}
-                        {InputShoe.map((inputItem) => (
-                            <Input
-                                key={inputItem.field}
-                                IconCategoryName={inputItem.IconCategoryName}
-                                IconName={inputItem.IconName}
-                                placeholder={`${inputItem.place}`}
-                                color={AllColor.Androidgreen}
-                                placeholderTextColor={AllColor.gray}
-                                InputHeader={inputItem.label}
-                                size={20}
-                                value={state[inputItem.field] || ""}
-                                keyboardType={inputItem.keyboardType}
-                                onChangeText={(text) => dispatch({ type: 'SET_INPUT', field: inputItem.field, payload: text })}
-                                inputColor={AllColor.black}
-                                readOnly={inputItem.readOnly}
-                            />
-                        ))}
+                        {
+                            InputShoe.map((inputItem) => (
+                                <Input
+                                    key={inputItem.field}
+                                    IconCategoryName={inputItem.IconCategoryName}
+                                    IconName={inputItem.IconName}
+                                    placeholder={`${inputItem.place}`}
+                                    color={AllColor.Androidgreen}
+                                    placeholderTextColor={AllColor.gray}
+                                    InputHeader={inputItem.label}
+                                    size={20}
+                                    value={state[inputItem.field] || ""}
+                                    keyboardType={inputItem.keyboardType}
+                                    onChangeText={(text) => dispatch({ type: 'SET_INPUT', field: inputItem.field, payload: text })}
+                                    inputColor={AllColor.black}
+                                    readOnly={inputItem.readOnly}
+                                />
+                            ))
+                        }
 
 
                         {/* Update Button */}
@@ -101,20 +100,29 @@ const CreateShoe = () => {
                             }}
                         />
 
-                        <BannerAd
-                            unitId={adUnitId}
-                            size={BannerAdSize.ADAPTIVE_BANNER}
-                            requestOptions={{
-                                requestNonPersonalizedAdsOnly: true,
-                            }}
-                        />
+
+                        {
+                            loading === true && (
+                                <View style={styles.loadingOverlay}>
+                                    <ActivityIndicator size="large" color={AllColor.black} />
+                                </View>
+                            )
+                        }
+
+
                     </ScrollView>
 
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
+            <AdBanner
+                containerStyle={{ position: 'absolute', bottom: insets.bottom }}
+            ></AdBanner>
         </View>
 
     );
+
+
+
 };
 
 export default CreateShoe;
@@ -124,6 +132,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: AllColor.white
+    },
+    loadingOverlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999,
     }
 });
 

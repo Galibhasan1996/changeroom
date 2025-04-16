@@ -12,7 +12,7 @@ const Pagination = ({ page, setPage, totalPages, totalLockers, bottomm }) => {
     const mergedButtons = [...new Set([...preButton, page, ...nextButton])].sort((a, b) => a - b);
 
     return (
-        <View style={[styles.paginationContainer, { backgroundColor: "rgba(255,255,255,0.5)", bottom: bottomm ? bottomm : scale(20) }]}>
+        <View style={[styles.paginationContainer, { backgroundColor: AllColor.rgbaBlack, bottom: bottomm ? bottomm : scale(20) }]}>
             {/* Previous Button */}
             <TouchableOpacity
                 onPress={() => setPage((prevPage) => Math.max(1, prevPage - 1))}
@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         width: width,
         position: "absolute",
-        // bottom: 20,
         paddingVertical: 10,
         borderRadius: 20,
+
     },
     button: {
         padding: 10,

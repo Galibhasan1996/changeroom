@@ -1,7 +1,7 @@
-import { Keyboard, StyleSheet, TouchableOpacity, View, StatusBar, Image, } from 'react-native'
+import { Keyboard, StyleSheet, TouchableOpacity, View, StatusBar, Image, ActivityIndicator, } from 'react-native'
 import React, { useState, } from 'react'
 import Input from '../../../Component/Input/Input'
-import { responsiveScreenWidth } from 'react-native-responsive-dimensions'
+import { responsiveScreenWidth, responsiveFontSize, responsiveHeight, } from 'react-native-responsive-dimensions'
 import { scale } from 'react-native-size-matters'
 import Button from '../../../Component/Button/Button'
 import { GestureHandlerRootView, PanGestureHandler, State, } from 'react-native-gesture-handler';
@@ -14,10 +14,9 @@ import { validateLogin } from '../../../util/helper/validation/Validation'
 import { useAuth } from '../../../Hook/Auth/useAuth'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { width } from '../../../Hook/Style/Style'
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import AdBanner from '../../../Component/AdBanner/AdBanner'
 
 const Login = () => {
-    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
 
     const { error, loading, userLogin } = useAuth()
     const insets = useSafeAreaInsets()
@@ -69,7 +68,9 @@ const Login = () => {
             setEmail('')
             setPassword('')
             Keyboard.dismiss()
-            resetAndNavigate("BottomTabNavigator")
+            if (loading === false) {
+                resetAndNavigate("BottomTabNavigator")
+            }
         }
         // styleConsole("🚀 ~ handleLogin ~ data:", "login", data)
         if (data.errors) {
@@ -81,78 +82,82 @@ const Login = () => {
     }
 
     return (
-        <GestureHandlerRootView style={[styles.container, { marginTop: insets.top }]}>
+        <GestureHandlerRootView style={[styles.container, { paddingTop: insets.top }]}>
             <PanGestureHandler onHandlerStateChange={handleGesture}>
-                <View style={{ flex: 1, alignItems: 'center', }}>
-                    <StatusBar barStyle={"dark-content"}></StatusBar>
-                    <CustomText variant='h1' fontSize={30} style={{ fontWeight: 'bold', marginTop: scale(20), }}>{"Login"}</CustomText>
-                    <Image source={require("../../../util/image/login.png")} style={styles.logInImage}></Image>
-
-                    {/* --------------input-------------- */}
-                    <Input
-                        IconCategoryName={"Fontisto"}
-                        IconName={"email"}
-                        placeholder={"Enter your Email"}
-                        color={AllColor.Androidgreen}
-                        placeholderTextColor={AllColor.gray}
-                        InputHeader={"Email"}
-                        size={scale(20)}
-                        value={email}
-                        keyboardType={"email-address"}
-                        onChangeText={(text) => setEmail(text)}
-                        inputColor={AllColor.black}
-                    ></Input>
-                    {/* ----------------password--------------------- */}
-                    <Input
-                        IconCategoryName={"Ionicons"}
-                        IconName={"lock-closed-outline"}
-                        placeholder={"Enter your Password"}
-                        color={AllColor.Androidgreen}
-                        placeholderTextColor={AllColor.gray}
-                        InputHeader={"Password"}
-                        size={scale(20)}
-                        value={password}
-                        keyboardType={"default"}
-                        onChangeText={(text) => setPassword(text)}
-                        inputColor={AllColor.black}
-                        secureTextEntry={true}
-                    ></Input>
-
-                    {/* ---------login button--------- */}
-                    <Button
-                        BtBackgroundColor={AllColor.black}
-                        ButtonTitle={"Login"}
-                        ButtonTitleColor={AllColor.white}
-                        marginTop={scale(25)}
-                        onPress={() => { handleLogin() }}
-                        CpaddingHorizontal={scale(10)}
-                        CpaddingVertical={scale(5)}
-                        btnWidth={responsiveScreenWidth(80)}
-                        borderradius={scale(10)}
-                    ></Button>
-
-                    {/* ----------------------don't have account ------------------ */}
-                    <View style={styles.dont_have_account_text_container}>
-                        <View>
-                            <CustomText variant='h6' Color={AllColor.gray} >{"Dont' have an account"}</CustomText>
-
+                {
+                    loading === true ?
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+                            <ActivityIndicator size={"large"} color={AllColor.black}></ActivityIndicator>
+                            <AdBanner
+                                containerStyle={{ position: "absolute", bottom: insets.bottom }}
+                            ></AdBanner>
                         </View>
-                        <TouchableOpacity onPress={() => {
-                            navigate("Signup")
-                        }}>
-                            <CustomText variant='h6' Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Signup "}</CustomText>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.addContainer,]}>
-                        <BannerAd
-                            unitId={adUnitId}
-                            size={BannerAdSize.ADAPTIVE_BANNER}
-                            requestOptions={{
-                                requestNonPersonalizedAdsOnly: true,
-                            }}
-                        />
-                    </View>
-                </View>
+                        :
+                        <View style={{ flex: 1, alignItems: 'center', }}>
+                            <StatusBar barStyle={"dark-content"} backgroundColor={AllColor.white}></StatusBar>
+                            <CustomText variant='h1' fontSize={responsiveFontSize(3.5)} style={{ fontWeight: 'bold', marginTop: scale(responsiveHeight(3)), }}>{"Login"}</CustomText>
+                            <Image source={require("../../../util/image/login.png")} style={styles.logInImage}></Image>
+
+                            {/* --------------input-------------- */}
+                            <Input
+                                IconCategoryName={"Fontisto"}
+                                IconName={"email"}
+                                placeholder={"Enter your Email"}
+                                color={AllColor.Androidgreen}
+                                placeholderTextColor={AllColor.gray}
+                                InputHeader={"Email"}
+                                size={scale(20)}
+                                value={email}
+                                keyboardType={"email-address"}
+                                onChangeText={(text) => setEmail(text)}
+                                inputColor={AllColor.black}
+                            ></Input>
+                            {/* ----------------password--------------------- */}
+                            <Input
+                                IconCategoryName={"Ionicons"}
+                                IconName={"lock-closed-outline"}
+                                placeholder={"Enter your Password"}
+                                color={AllColor.Androidgreen}
+                                placeholderTextColor={AllColor.gray}
+                                InputHeader={"Password"}
+                                size={scale(20)}
+                                value={password}
+                                keyboardType={"default"}
+                                onChangeText={(text) => setPassword(text)}
+                                inputColor={AllColor.black}
+                                secureTextEntry={true}
+                            ></Input>
+
+                            {/* ---------login button--------- */}
+                            <Button
+                                BtBackgroundColor={AllColor.black}
+                                ButtonTitle={"Login"}
+                                ButtonTitleColor={AllColor.white}
+                                marginTop={scale(25)}
+                                onPress={() => { handleLogin() }}
+                                CpaddingHorizontal={scale(10)}
+                                CpaddingVertical={scale(5)}
+                                btnWidth={responsiveScreenWidth(80)}
+                                borderradius={scale(10)}
+                            ></Button>
+
+                            {/* ----------------------don't have account ------------------ */}
+                            <View style={styles.dont_have_account_text_container}>
+                                <View>
+                                    <CustomText variant='h6' Color={AllColor.gray} >{"Dont' have an account"}</CustomText>
+
+                                </View>
+                                <TouchableOpacity onPress={() => {
+                                    navigate("Signup")
+                                }}>
+                                    <CustomText variant='h6' Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Signup "}</CustomText>
+                                </TouchableOpacity>
+                            </View>
+                            <AdBanner
+                                containerStyle={{ position: "absolute", bottom: insets.bottom }}
+                            ></AdBanner>
+                        </View>
+                }
             </PanGestureHandler>
         </GestureHandlerRootView>
     )

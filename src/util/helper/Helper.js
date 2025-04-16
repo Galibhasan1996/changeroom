@@ -1,8 +1,8 @@
-import { Platform } from "react-native";
+import { PermissionsAndroid, Platform } from "react-native";
 import { launchCamera } from "react-native-image-picker";
 import Toast from "react-native-toast-message";
-const MID = 211
-const PORT = 27
+const MID = 174
+const PORT = 94
 // -----------for real device---------------
 export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `https://changeroombackend.onrender.com/api/v1/`
 // export const BASE_URL = `https://changeroombackend.onrender.com/api/v1/`
@@ -23,7 +23,24 @@ export const styleConsole = (message, WhatCall, ...data) => {
 
 
 
-
+export const requestCameraPermission = async () => {
+    try {
+        const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            {
+                title: 'Camera Permission',
+                message: 'App needs access to your camera.',
+                buttonNeutral: 'Ask Me Later',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+            }
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+    } catch (err) {
+        console.log("🚀 ~ Helper.js:40 ~ requestCameraPermission ~ err:", err)
+        return false;
+    }
+};
 
 
 

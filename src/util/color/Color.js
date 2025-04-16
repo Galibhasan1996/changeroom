@@ -23,9 +23,8 @@ const AllColor = {
     gray: "#808080",
     red: "#ff3110",
 
-    // ✅ Fixed and Added Transparent Colors
     rgbaWhite: "rgba(255,255,255,0.5)",
-    rgbaBlack: "rgba(0,0,0,0.5)", // Fixed typo
+    rgbaBlack: "rgba(0,0,0,0.2)",
     rgbaGreen: "rgba(0,255,0,0.31)",
     rgbaRed: "rgba(253,0,255,0.5)",
     rgbaBlue: "rgba(0,0,255,0.4)",

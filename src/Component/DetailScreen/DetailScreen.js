@@ -8,26 +8,22 @@ import { navigate } from '../../navigator/NavigationREF/NavigationRef';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AllColor from '../../util/color/Color';
 import { styleConsole } from '../../util/helper/Helper';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import AdBanner from '../AdBanner/AdBanner';
 
 
 const DetailScreen = ({ details, image, isLeft, data, type }) => {
 
-    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
-
-
-
     const insets = useSafeAreaInsets();
 
     return (
-        <View style={[styles.container, { marginTop: insets.top }]}>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
             <StatusBar barStyle={"dark-content"}></StatusBar>
 
             {/* -----------------search icon---------------- */}
             {
                 type === "preLocker" || type === "admin" || type === "preAdmin" ? null
                     :
-                    <TouchableOpacity style={[styles.search_icon, { backgroundColor: AllColor.white7 }]} onPress={() => {
+                    <TouchableOpacity style={[styles.search_icon,]} onPress={() => {
                         navigate("SearchLocker")
                     }}>
                         <Icon IconCategoryName="Fontisto" IconName="search" color={AllColor.gray} size={scale(20)}></Icon>
@@ -67,13 +63,6 @@ const DetailScreen = ({ details, image, isLeft, data, type }) => {
             </View>
             {/* ------------------ button Section` ------------------- */}
 
-            <BannerAd
-                unitId={adUnitId}
-                size={BannerAdSize.ADAPTIVE_BANNER}
-                requestOptions={{
-                    requestNonPersonalizedAdsOnly: true,
-                }}
-            />
             {
                 type === "preLocker" || type === "preAdmin" ? null
                     :
@@ -95,7 +84,9 @@ const DetailScreen = ({ details, image, isLeft, data, type }) => {
                         }}
                     ></Button>
             }
-
+            <AdBanner
+                containerStyle={{ position: "absolute", bottom: insets.bottom }}
+            ></AdBanner>
 
         </View>
     );
@@ -115,7 +106,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        marginTop: scale(20),
         borderWidth: scale(1),
         borderColor: AllColor.Androidgreen,
     },
@@ -135,31 +125,31 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingHorizontal: scale(20),
         paddingVertical: scale(5),
-        borderBottomWidth: scale(1),
-        borderBottomColor: AllColor.white7
+        marginVertical: scale(2),
+        elevation: scale(1),
+        backgroundColor: AllColor.white3
     },
     search_icon: {
-        position: "absolute",
-        top: scale(10),
-        right: scale(10),
-        height: scale(40),
-        width: scale(40),
+        position: 'absolute',
+        top: height * 0.05,
+        right: width * 0.05,
+        width: width * 0.12,
+        height: width * 0.12,
         borderRadius: scale(20),
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: AllColor.white7
     },
     ribbonContainer: {
         position: 'absolute',
-        top: scale(400),
-        left: -scale(-50),
-        width: scale(250),
+        top: height * 0.49,
+        left: width * 0,
+        width: width * 0.9,
         backgroundColor: AllColor.rgbaRed,
         paddingVertical: scale(5),
-        // paddingHorizontal: scale(50),
         transform: [{ rotate: '-45deg' }],
         zIndex: 999,
         borderRadius: scale(10),
-        // elevation: scale(5),
     },
 
     ribbonText: {

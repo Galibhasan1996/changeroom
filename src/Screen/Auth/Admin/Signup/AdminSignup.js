@@ -12,6 +12,7 @@ import AllColor from '../../../../util/color/Color';
 import { navigate } from '../../../../navigator/NavigationREF/NavigationRef';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { width } from '../../../../Hook/Style/Style';
+import AdBanner from '../../../../Component/AdBanner/AdBanner';
 
 // Initial state for the form
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
     password: '',
     confirmPassword: '',
     dateOfBirth: '',
+    // isAdmin: true
 };
 
 // Reducer function to update state
@@ -45,7 +47,7 @@ const AdminSignup = () => {
     };
 
     return (
-        <View style={[styles.container, { marginTop: insets.top }]}>
+        <View style={[styles.container, { paddingTop: insets.top }]}>
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                 <BasicHeader></BasicHeader>
                 <StatusBar barStyle={"dark-content"}></StatusBar>
@@ -88,13 +90,14 @@ const AdminSignup = () => {
 
                     {/* Already have an account? Login */}
                     <View style={styles.dont_have_account_text_container}>
-                        <CustomText variant='h6' Color={AllColor.gray}>{"Already have an account"}</CustomText>
+                        <CustomText variant='h6' Color={AllColor.gray}>{"Already have an account "}</CustomText>
                         <TouchableOpacity onPress={() => navigate("AdminLogin")}>
-                            <CustomText variant='h6' Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Admin Login"}</CustomText>
+                            <CustomText variant='h6' Color={AllColor.Androidgreen} style={{ marginLeft: scale(3) }}>{"Admin Login ! "}</CustomText>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
+            <AdBanner containerStyle={{ position: 'absolute', bottom: insets.bottom }}></AdBanner>
         </View>
     );
 };

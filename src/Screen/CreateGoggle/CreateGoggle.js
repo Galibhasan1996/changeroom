@@ -11,11 +11,10 @@ import CustomText from '../../Component/Text/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AllColor from '../../util/color/Color';
 import { useAuth } from '../../Hook/Auth/useAuth';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import AdBanner from '../../Component/AdBanner/AdBanner';
 
 const CreateGoggle = () => {
 
-    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
 
     const insets = useSafeAreaInsets();
 
@@ -112,18 +111,14 @@ const CreateGoggle = () => {
                                     }}
                                 />
 
-                                <BannerAd
-                                    unitId={adUnitId}
-                                    size={BannerAdSize.ADAPTIVE_BANNER}
-                                    requestOptions={{
-                                        requestNonPersonalizedAdsOnly: true,
-                                    }}
-                                />
                             </ScrollView>
 
                     }
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
+            <AdBanner
+                containerStyle={{ position: 'absolute', bottom: insets.bottom }}
+            ></AdBanner>
         </View>
 
     );

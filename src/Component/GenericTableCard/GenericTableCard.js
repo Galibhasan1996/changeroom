@@ -4,10 +4,9 @@ import { scale } from 'react-native-size-matters';
 import AllColor from '../../util/color/Color';
 import { width } from '../../Hook/Style/Style';
 import { styleConsole } from '../../util/helper/Helper';
-import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import AdBanner from '../AdBanner/AdBanner';
 const GenericTableCard = ({ data = [], headers = [], getItemFields = () => [], onRowPress = () => { }, imageKey = 'image.url', paddingBottom = scale(100), type = null, onLongPress }) => {
     // styleConsole("🚀 ~ GenericTableCard.js:65 ~ GenericTableCard ~ data:", "GenericTableCard", data)
-    const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-7043280906751715/1316685164';
     const renderItem = ({ item, index }) => (
         <View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -37,13 +36,7 @@ const GenericTableCard = ({ data = [], headers = [], getItemFields = () => [], o
             {
                 ((index + 1) % 5 === 0) &&
                 (
-                    <BannerAd
-                        unitId={adUnitId}
-                        size={BannerAdSize.ADAPTIVE_BANNER}
-                        requestOptions={{
-                            requestNonPersonalizedAdsOnly: true,
-                        }}
-                    />
+                    <AdBanner></AdBanner>
                 )
             }
         </View>
@@ -77,13 +70,6 @@ const GenericTableCard = ({ data = [], headers = [], getItemFields = () => [], o
                 contentContainerStyle={{ paddingBottom }}
             />
 
-            <BannerAd
-                unitId={adUnitId}
-                size={BannerAdSize.ADAPTIVE_BANNER}
-                requestOptions={{
-                    requestNonPersonalizedAdsOnly: true,
-                }}
-            />
         </View>
     );
 };
@@ -104,7 +90,7 @@ const styles = StyleSheet.create({
     },
     headerCell: {
         width: scale(100),
-        color: "white",
+        color: AllColor.white,
         fontWeight: "bold",
         textAlign: "center",
         paddingHorizontal: scale(5),
@@ -112,19 +98,19 @@ const styles = StyleSheet.create({
     row: {
         flexDirection: "row",
         paddingVertical: scale(6),
-        borderBottomWidth: scale(1),
-        borderBottomColor: AllColor.Cyan,
+        marginVertical: scale(5),
+        elevation: scale(2),
         alignItems: 'center',
     },
     evenRow: {
-        backgroundColor: AllColor.evenRow,
+        backgroundColor: AllColor.white,
     },
     oddRow: {
-        backgroundColor: AllColor.oddRow,
+        backgroundColor: AllColor.white4,
     },
     cell: {
         width: scale(100),
-        color: AllColor.white,
+        color: AllColor.black,
         textAlign: "center",
         paddingHorizontal: scale(5),
     },

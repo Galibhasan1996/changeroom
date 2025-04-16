@@ -8,8 +8,7 @@ import BasicHeader from '../../Component/Header/BasicHeader/BasicHeader';
 import { useRoute } from '@react-navigation/native';
 import { validateUpdata } from '../../util/helper/validation/Validation';
 import { previosUpdateLocker, } from '../../service/api/login/UserLogin';
-import { BASE_URL, getFileType, showToast, styleConsole } from '../../util/helper/Helper';
-import { launchCamera, } from 'react-native-image-picker';
+import { BASE_URL, getFileType, openCamera, requestCameraPermission, showToast, styleConsole } from '../../util/helper/Helper';
 import { UserStorage } from '../../store/Store';
 import { goBack, } from '../../navigator/NavigationREF/NavigationRef';
 import AllColor from '../../util/color/Color';
@@ -23,78 +22,83 @@ const UpdateLocker = () => {
     const { item = {} } = route.params || {};
     // styleConsole("🚀 ~ UpdateLocker.js:24 ~ UpdateLocker ~ item:", "UpdateLocker", { type }, { item })
 
-
-
     const { updateLockerById, loading } = useAuth()
-
-
 
     const token = UserStorage.getItem("token")
 
     const [captureImage, setcaptureImage] = useState(item?.image?.url ? item?.image?.url : null);
-
+    // console.log("🚀 ~ UpdateLocker.js:31 ~ UpdateLocker ~ captureImage:", captureImage)
 
 
     const [state, dispatch] = useReducer(reducerForUpdate, getInitialStateForUpdate(item));
 
+    // const requestCameraPermission = async () => {
+    //     try {
+    //         const granted = await PermissionsAndroid.request(
+    //             PermissionsAndroid.PERMISSIONS.CAMERA,
+    //             {
+    //                 title: 'Camera Permission',
+    //                 message: 'App needs access to your camera.',
+    //                 buttonNeutral: 'Ask Me Later',
+    //                 buttonNegative: 'Cancel',
+    //                 buttonPositive: 'OK',
+    //             }
+    //         );
+    //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    //             await OpenCamera();
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     } catch (err) {
+    //         console.log("Permission error:", err);
+    //         return false;
+    //     }
+    // };
 
 
-
-
-
-
-
-    const requestCameraPermission = async () => {
+    const cameraPermission = async () => {
         try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                {
-                    title: 'Camera Permission',
-                    message: 'App needs access to your camera.',
-                    buttonNeutral: 'Ask Me Later',
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                }
-            );
-            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-                await OpenCamera();
-                return true;
+            const granted = await requestCameraPermission()
+            if (granted) {
+                openCamera(setcaptureImage)
             } else {
-                return false;
+                showToast("error", "Camera permission not granted", "Camera permission not granted");
             }
-        } catch (err) {
-            console.log("Permission error:", err);
-            return false;
-        }
-    };
-
-    const OpenCamera = async () => {
-        try {
-            const result = await launchCamera({
-                mediaType: "photo",
-                quality: 0.5,
-                cameraType: "back",
-                maxHeight: 1080,
-                maxWidth: 1080,
-            });
-
-            if (result.didCancel) {
-                // console.log("🚀 Camera operation canceled:", result);
-                if (result.didCancel === true) {
-                    showToast("error", "Camera operation canceled", "Camera operation canceled");
-                }
-            } else if (result.errorCode) {
-                console.error(`🚨 Camera Error [${result.errorCode}]:`, result.errorMessage);
-            } else {
-                setcaptureImage(result.assets[0].uri);
-                // console.log("📸 Photo captured successfully:", result.assets[0].uri);
-            }
-
         } catch (error) {
-            console.log("🚀 ~ UpdateLocker.js:100 ~ OpenCamera ~ error:", error)
-
+            console.log("🚀 ~ UpdateLocker.js:63 ~ cameraPermission ~ error:", error)
         }
-    };
+    }
+
+
+
+    // const OpenCamera = async () => {
+    //     try {
+    //         const result = await launchCamera({
+    //             mediaType: "photo",
+    //             quality: 0.5,
+    //             cameraType: "back",
+    //             maxHeight: 1080,
+    //             maxWidth: 1080,
+    //         });
+
+    //         if (result.didCancel) {
+    //             // console.log("🚀 Camera operation canceled:", result);
+    //             if (result.didCancel === true) {
+    //                 showToast("error", "Camera operation canceled", "Camera operation canceled");
+    //             }
+    //         } else if (result.errorCode) {
+    //             console.error(`🚨 Camera Error [${result.errorCode}]:`, result.errorMessage);
+    //         } else {
+    //             setcaptureImage(result.assets[0].uri);
+    //             // console.log("📸 Photo captured successfully:", result.assets[0].uri);
+    //         }
+
+    //     } catch (error) {
+    //         console.log("🚀 ~ UpdateLocker.js:100 ~ OpenCamera ~ error:", error)
+
+    //     }
+    // };
     const handleUpdateLocker = useCallback(async () => {
         if (!validateUpdata(state, showToast)) return;
 
@@ -179,32 +183,27 @@ const UpdateLocker = () => {
 
 
     return (
-        <View style={[styles.container, { marginTop: insets.top }]}>
-            <StatusBar barStyle={"dark-content"}></StatusBar>
-
-            <BasicHeader />
-            <CustomText variant='h1' fontSize={30} style={{ fontWeight: 'bold', marginTop: 20, }}>{"Update Locker"}</CustomText>
+        <View style={[styles.container, { marginTop: insets.top, flex: 1 }]}>
+            <StatusBar barStyle={"dark-content"} />
 
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} >
+                <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+                    <BasicHeader />
+                    <View style={{ width: width, alignItems: "center", }}>
+                        <CustomText variant="h1" fontSize={30} style={{ fontWeight: "bold", marginTop: 20 }}>{"Update Locker"}</CustomText>
+                    </View>
+                    {/* Image Section */}
+                    <TouchableOpacity style={{ width: width, alignItems: "center", justifyContent: "center", }}
+                        onPress={cameraPermission}
+                    >
+                        <View style={styles.image_Container}>
+                            <Image source={captureImage ? { uri: captureImage } : item?.image?.url ? { uri: item.image.url } : require("../../util/image/holder.jpg")}
+                                style={styles.image}
+                            />
+                        </View>
+                    </TouchableOpacity>
 
-                    <ScrollView >
-                        {/* Image Section */}
-                        <TouchableOpacity style={{ width: width, alignItems: 'center', justifyContent: 'center' }} onPress={async () => {
-                            const permissionGranted = await requestCameraPermission();
-                            if (permissionGranted) {
-                            } else {
-                                showToast("error", "Camera permission required", "Please enable camera access to upload an image.");
-                            }
-                        }}>
-                            <View style={styles.image_Container}>
-                                <Image
-                                    source={captureImage ? { uri: captureImage } : (item?.image?.url ? { uri: item.image.url } : require("../../util/image/holder.jpg"))}
-                                    style={styles.image}
-                                />
-                            </View>
-                        </TouchableOpacity>
-
+                    <ScrollView contentContainerStyle={{ paddingBottom: 0 }} keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
 
                         {/* Input Fields */}
                         {InputDataForUpdate.map((inputItem) => (
@@ -219,12 +218,17 @@ const UpdateLocker = () => {
                                 size={20}
                                 value={state[inputItem.field] || ""}
                                 keyboardType={inputItem.keyboardType}
-                                onChangeText={(text) => dispatch({ type: 'SET_INPUT', field: inputItem.field, payload: text })}
+                                onChangeText={(text) =>
+                                    dispatch({
+                                        type: "SET_INPUT",
+                                        field: inputItem.field,
+                                        payload: text,
+                                    })
+                                }
                                 inputColor={AllColor.black}
                                 readOnly={inputItem.readOnly}
                             />
                         ))}
-
 
                         {/* Update Button */}
                         <Button
@@ -238,14 +242,15 @@ const UpdateLocker = () => {
                             btnWidth={"90%"}
                             borderradius={10}
                             onPress={async () => {
-                                await handleUpdateLocker()
-                                await updatePhoto()
+                                await handleUpdateLocker();
+                                await updatePhoto();
                             }}
                         />
                     </ScrollView>
                 </KeyboardAvoidingView>
             </TouchableWithoutFeedback>
         </View>
+
 
     );
 };
