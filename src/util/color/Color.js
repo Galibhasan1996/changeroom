@@ -1,6 +1,23 @@
 const AllColor = {
     Androidgreen: "#3DDC84",
+    Androidgreen2: "#50DF90",
+    Androidgreen3: "#63E39C",
+    Androidgreen4: "#77E6A8",
+    Androidgreen5: "#8AEAB5",
+    Androidgreen6: "#9EEDC1",
+    Androidgreen7: "#B1F1CD",
+    Androidgreen8: "#C4F4DA",
+    Androidgreen9: "#D8F8E6",
     Cyan: "#00FFFF",
+    Cyan2: "#19FFFF",
+    Cyan3: "#33FFFF",
+    Cyan4: "#4CFFFF",
+    Cyan5: "#66FFFF",
+    Cyan6: "#7FFFFF",
+    Cyan7: "#99FFFF",
+    Cyan8: "#B2FFFF",
+    Cyan9: "#CCFFFF",
+    Cyan10: "#E5FFFF",
     Blueviolet: "#8A2BE2",
     Darkspringgreen: "#177245",
     Darkturquoise: "#00CED1",
@@ -21,6 +38,21 @@ const AllColor = {
     Tan: "#f3e9d7",
     blurGray: "#335059",
     gray: "#808080",
+    gray1: "#bebebe",
+    gray2: "#C4C4C4",
+    gray3: "#CBCBCB",
+    gray4: "#D1D1D1",
+    gray5: "#D8D8D8",
+    gray6: "#DEDEDE",
+    gray7: "#E5E5E5",
+    gray8: "#EBEBEB",
+    gray9: "#F2F2F2",
+    gray10: "#8C8C8C",
+    gray11: "#999999",
+    gray12: "#A6A6A6",
+    gray13: "#B2B2B2",
+    gray14: "#BFBFBF",
+    gray15: "#CCCCCC",
     red: "#ff3110",
 
     rgbaWhite: "rgba(255,255,255,0.5)",
@@ -38,3 +70,10 @@ const AllColor = {
 
 
 export default AllColor
+
+
+
+
+
+
+

@@ -1,5 +1,5 @@
 import React, { useCallback, useReducer, useState } from 'react';
-import { Image, KeyboardAvoidingView, PermissionsAndroid, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, Switch, Text } from 'react-native';
+import { Image, KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View, TouchableWithoutFeedback, Keyboard, } from 'react-native';
 import { width } from '../../Hook/Style/Style';
 import Input from '../../Component/Input/Input';
 import Button from '../../Component/Button/Button';
@@ -32,29 +32,7 @@ const UpdateLocker = () => {
 
     const [state, dispatch] = useReducer(reducerForUpdate, getInitialStateForUpdate(item));
 
-    // const requestCameraPermission = async () => {
-    //     try {
-    //         const granted = await PermissionsAndroid.request(
-    //             PermissionsAndroid.PERMISSIONS.CAMERA,
-    //             {
-    //                 title: 'Camera Permission',
-    //                 message: 'App needs access to your camera.',
-    //                 buttonNeutral: 'Ask Me Later',
-    //                 buttonNegative: 'Cancel',
-    //                 buttonPositive: 'OK',
-    //             }
-    //         );
-    //         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-    //             await OpenCamera();
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     } catch (err) {
-    //         console.log("Permission error:", err);
-    //         return false;
-    //     }
-    // };
+
 
 
     const cameraPermission = async () => {
@@ -72,33 +50,7 @@ const UpdateLocker = () => {
 
 
 
-    // const OpenCamera = async () => {
-    //     try {
-    //         const result = await launchCamera({
-    //             mediaType: "photo",
-    //             quality: 0.5,
-    //             cameraType: "back",
-    //             maxHeight: 1080,
-    //             maxWidth: 1080,
-    //         });
 
-    //         if (result.didCancel) {
-    //             // console.log("🚀 Camera operation canceled:", result);
-    //             if (result.didCancel === true) {
-    //                 showToast("error", "Camera operation canceled", "Camera operation canceled");
-    //             }
-    //         } else if (result.errorCode) {
-    //             console.error(`🚨 Camera Error [${result.errorCode}]:`, result.errorMessage);
-    //         } else {
-    //             setcaptureImage(result.assets[0].uri);
-    //             // console.log("📸 Photo captured successfully:", result.assets[0].uri);
-    //         }
-
-    //     } catch (error) {
-    //         console.log("🚀 ~ UpdateLocker.js:100 ~ OpenCamera ~ error:", error)
-
-    //     }
-    // };
     const handleUpdateLocker = useCallback(async () => {
         if (!validateUpdata(state, showToast)) return;
 
@@ -109,11 +61,11 @@ const UpdateLocker = () => {
                 Number(state.shoe_size), Number(state.aadhar),
                 state.address, state.isLeft, item._id, token
             );
-            styleConsole("🚀 ~ UpdateLocker.js:103 ~ handleUpdateLocker ~ data:", "UpdateLocker", data.updateLocker)
+            // styleConsole("🚀 ~ UpdateLocker.js:103 ~ handleUpdateLocker ~ data:", "UpdateLocker", data.updateLocker)
 
 
             if (data.message === "Locker updated successfully") {
-                showToast("success", data.message, data.message);
+                showToast("success", data.message, data.message, "top", 80);
                 dispatch({ type: 'RESET' });
                 preUpdate(data.previousLocker);
                 goBack()

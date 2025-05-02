@@ -19,9 +19,9 @@ export const UserStorage = {
         if (!value) return null;
 
         try {
-            return JSON.parse(value); // Attempt to parse JSON if applicable
+            return JSON.parse(value);
         } catch {
-            return value; // Return as is if not JSON
+            return value;
         }
     },
 

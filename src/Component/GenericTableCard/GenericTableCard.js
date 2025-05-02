@@ -11,7 +11,19 @@ const GenericTableCard = ({ data = [], headers = [], getItemFields = () => [], o
         <View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <TouchableOpacity
-                    style={[styles.row, index % 2 === 0 ? styles.evenRow : styles.oddRow]}
+                    style={[
+                        styles.row,
+                        {
+                            backgroundColor:
+                                item.role &&
+                                    item.role.toLowerCase().replace(/\s/g, "") === "l'oréal"
+                                    ? AllColor.Androidgreen8
+                                    : index % 2 === 0
+                                        ? AllColor.white
+                                        : AllColor.white4,
+                        },
+                    ]}
+
                     activeOpacity={0.9}
                     onPress={() => onRowPress(item, index)}
                     onLongPress={() => {
@@ -102,12 +114,6 @@ const styles = StyleSheet.create({
         elevation: scale(2),
         alignItems: 'center',
     },
-    evenRow: {
-        backgroundColor: AllColor.white,
-    },
-    oddRow: {
-        backgroundColor: AllColor.white4,
-    },
     cell: {
         width: scale(100),
         color: AllColor.black,
@@ -118,7 +124,9 @@ const styles = StyleSheet.create({
         width: width * 0.2,
         height: width * 0.2,
         borderRadius: width * 0.3,
-        resizeMode: "cover"
+        resizeMode: "cover",
+        borderWidth: scale(1),
+        borderColor: AllColor.Androidgreen,
     }
 });
 

@@ -50,7 +50,6 @@ const Home = () => {
     );
 
 
-    // **Show Loading Indicator**
     if (loading) {
         return (
             <View style={[styles.container, styles.center]}>
@@ -76,7 +75,6 @@ const Home = () => {
                     item.mobile,
                     item.department,
                     item.status,
-                    // item.isLeft !== undefined ? (item.isLeft ? "Yes" : "No") : "N/A"
                 ]}
                 onRowPress={(item) => {
                     navigate("GenericDetailScreen", { item, type: "allLocker" });

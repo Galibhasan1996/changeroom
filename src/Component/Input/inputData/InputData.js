@@ -361,7 +361,6 @@ export const InputShoe = [
         IconCategoryName: "Entypo",
         IconName: "user",
     },
-
     {
         place: "emp_code",
         field: 'emp_code',
@@ -394,7 +393,6 @@ export const InputShoe = [
         IconCategoryName: "Octicons",
         IconName: "number",
     },
-    ,
     {
         place: "shoe_size",
         field: 'shoe_size',
@@ -403,7 +401,6 @@ export const InputShoe = [
         IconCategoryName: "Octicons",
         IconName: "number",
     },
-    ,
     {
         place: "mobile",
         field: 'mobile',
@@ -411,6 +408,16 @@ export const InputShoe = [
         keyboardType: 'phone-pad',
         IconCategoryName: "Octicons",
         IconName: "number",
+    },
+    {
+        place: "date of issue Eg: DD-MM-YYYY",
+        field: 'date',
+        label: 'date',
+        keyboardType: 'phone-pad',
+        IconCategoryName: "Fontisto",
+        IconName: "date",
+        LeftIconName: "date-range",
+        LeftIconCategoryName: "MaterialIcons"
     },
 ]
 
@@ -423,4 +430,5 @@ export const getInitialStateCreateShoe = () => ({
     issue_quantity: "",
     mobile: "",
     shoe_size: "",
+    date: ""
 });

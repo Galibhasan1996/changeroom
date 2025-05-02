@@ -1,11 +1,11 @@
-import React, { useCallback, useReducer, } from 'react';
-import { KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, View, TouchableWithoutFeedback, Keyboard, ActivityIndicator } from 'react-native';
+import React, { useCallback, useReducer, useState, } from 'react';
+import { KeyboardAvoidingView, ScrollView, StatusBar, StyleSheet, View, TouchableWithoutFeedback, Keyboard, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Input from '../../Component/Input/Input';
 import Button from '../../Component/Button/Button';
 import { InputShoe, getInitialStateCreateShoe, reducerForUpdate, } from '../../Component/Input/inputData/InputData';
 import BasicHeader from '../../Component/Header/BasicHeader/BasicHeader';
 import { validateShoe, } from '../../util/helper/validation/Validation';
-import { showToast } from '../../util/helper/Helper';
+import { showToast, styleConsole } from '../../util/helper/Helper';
 import { goBack, } from '../../navigator/NavigationREF/NavigationRef';
 import CustomText from '../../Component/Text/Text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,7 +26,7 @@ const CreateShoe = () => {
         if (!validateShoe(state, showToast)) return;
 
         try {
-            const data = await createShoes(state.name, state.emp_code, state.employer, state.department, state.issue_quantity, state.mobile, state.shoe_size);
+            const data = await createShoes(state.name, state.emp_code, state.employer, state.department, state.issue_quantity, state.mobile, state.shoe_size, state.date);
 
             if (data.error === "Shoe validation failed: department: Invalid department value") {
                 return showToast("error", `PACKING SECURITY UTILITY HOUSEKEEPING`, "Invalid department value",);
@@ -49,6 +49,8 @@ const CreateShoe = () => {
             showToast("error", "Update failed", error.message || "An error occurred");
         }
     }, [state, dispatch, goBack,]);
+
+
 
     return (
         <View style={[styles.container, { marginTop: insets.top }]}>
@@ -83,7 +85,6 @@ const CreateShoe = () => {
                             ))
                         }
 
-
                         {/* Update Button */}
                         <Button
                             BtBackgroundColor={AllColor.black}
@@ -100,7 +101,6 @@ const CreateShoe = () => {
                             }}
                         />
 
-
                         {
                             loading === true && (
                                 <View style={styles.loadingOverlay}>
@@ -108,7 +108,6 @@ const CreateShoe = () => {
                                 </View>
                             )
                         }
-
 
                     </ScrollView>
 

@@ -104,7 +104,7 @@ const SearchLocker = () => {
                                     navigate("GenericDetailScreen", { item, type: "allLocker" });
                                 }}
                                 imageKey={true}
-                                paddingBottom={scale(163)}
+                                paddingBottom={scale(170)}
                             />
                     }
                 </>

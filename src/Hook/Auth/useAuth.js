@@ -377,10 +377,10 @@ export const useAuth = () => {
     };
 
 
-    const createShoes = async (name, emp_code, employer, department, issue_quantity, mobile, shoe_size) => {
+    const createShoes = async (name, emp_code, employer, department, issue_quantity, mobile, shoe_size, date) => {
         setLoading(true);
         try {
-            const { data } = await axios.post(`${BASE_URL}goggle/createShoe`, { name, emp_code, employer, department, issue_quantity, mobile, shoe_size },
+            const { data } = await axios.post(`${BASE_URL}goggle/createShoe`, { name, emp_code, employer, department, issue_quantity, mobile, shoe_size, date },
                 {
                     headers: {
                         "Content-Type": "application/json",

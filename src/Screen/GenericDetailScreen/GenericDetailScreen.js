@@ -1,5 +1,5 @@
 // screens/GenericDetailScreen.js
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useFocusEffect, useRoute } from '@react-navigation/native';
 import { useAuth } from '../../Hook/Auth/useAuth';
 import { formatDate, styleConsole } from '../../util/helper/Helper';
@@ -15,8 +15,6 @@ const GenericDetailScreen = () => {
 
     const { preGetById, adminGetById, preAdminGetById } = useAuth();
 
-    const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(30);
     const token = UserStorage.getItem("token");
 
 

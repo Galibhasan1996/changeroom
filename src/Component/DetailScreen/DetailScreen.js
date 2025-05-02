@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: "space-between",
         paddingHorizontal: scale(20),
-        paddingVertical: scale(5),
+        paddingVertical: scale(3),
         marginVertical: scale(2),
         elevation: scale(1),
         backgroundColor: AllColor.white3
