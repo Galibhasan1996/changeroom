@@ -14,6 +14,7 @@ import GenericDetailScreen from "../../Screen/GenericDetailScreen/GenericDetailS
 import GoggleDetail from "../../Screen/GoggleDetail/GoggleDetail";
 import Home from "../../Screen/Home/Home";
 import PreLocker from "../../Screen/preLocker/PreLocker";
+import Profile from "../../Screen/Profile/Profile";
 import SearchLocker from "../../Screen/SearchLocker";
 import ShoeDetail from "../../Screen/ShoeDetail/ShoeDetail";
 import Splass from "../../Screen/Splass/Splass";
@@ -84,6 +85,9 @@ const allScreen = [
     {
         name: "GenericDetailScreen",
         component: GenericDetailScreen
+    }, {
+        name: "Profile",
+        component: Profile
     }
 ];
 

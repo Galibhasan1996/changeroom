@@ -56,11 +56,45 @@ export const validateUpdata = (state, showToast) => {
         return false;
     }
 
+    const shoe_sizeRegex = /^(?:[3-9]|1[0-2])$/;
+    if (!shoe_sizeRegex.test(state.shoe_size)) {
+        showToast("error", "Shoe size should be between 3 and 12", "Invalid shoe size");
+        return false;
+    }
+
+
+
     const aadharRegex = /^[0-9]{12}$/;
     if (!aadharRegex.test(state.aadhar)) {
         showToast("error", "Invalid aadhar number", "Aadhar number should be 12 digits");
         return false;
     }
+
+
+
+    const validRoles = ["NEEM", "NAPS", "TDS", "SSD", "CHAUDHARY", "LOREAL", "PERFECT SERVICE", "FM", "SIS", "RKS", "MESPACK"]
+
+    if (!validRoles.some((role) => role.toLowerCase() === state.role.toLowerCase().trim())) {
+        showToast("error", "You Entered Invalid Role", "Please Enter Valid Role");
+        return false;
+    }
+
+
+
+    const validDepartment = [
+        "FLOW", "STORE", "OPERATOR", "SUPERVISOR",
+        "HOUSEKEEPING", "MAINTENANCE", "MFG", "QUALITY", "ADMIN", "HR", "PRODUCTION",
+        "FINANCE", "SAFETY", "ACCOUNT", "PROJECT", "IT", "MSC", "SECURITY", "UTILITY",
+        "BOILER", "ETP", "PACKING", "LOADING",
+        "CHANGEROOM", "CONTRECTOR",
+    ];
+
+    if (!validDepartment.some(dept => dept.toLowerCase() === state.department.toLowerCase().trim())) {
+        showToast("error", "You Entered Invalid department", "Please Enter Valid department");
+        return false;
+    }
+
+
     return true;
 };
 
@@ -123,9 +157,6 @@ export const validateGoggle = (state, showToast) => {
             return false;
         }
     }
-
-
-
     return true;
 };
 

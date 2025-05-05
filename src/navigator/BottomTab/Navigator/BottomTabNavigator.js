@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image } from 'react-native';
 import { BottomScreen } from '../../../util/AllScreen/AllScreen';
 import Icon from '../../../Component/Icon/Icon';
 import AllColor from '../../../util/color/Color';
-import { scale } from 'react-native-size-matters';
+import { navigate } from '../../NavigationREF/NavigationRef';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,14 +16,28 @@ const BottomTabNavigator = () => (
                     component={component}
                     options={{
                         tabBarIcon: ({ color, size, focused }) => (
-                            <Icon IconCategoryName={iconCategory} IconName={icon} color={focused ? AllColor.Androidgreen : color} size={size} />
+                            <Icon
+                                IconCategoryName={iconCategory}
+                                IconName={icon}
+                                color={focused ? AllColor.Androidgreen : color}
+                                size={size}
+                            />
                         ),
                         tabBarLabelStyle: { fontWeight: 'bold' }
                     }}
+                    listeners={{
+                        tabLongPress: (e) => {
 
+                            if (name === 'Home') {
+                                navigate("Profile")
+                            }
+                        }
+                    }}
                 />
             ))}
     </Tab.Navigator>
+
+
 );
 
 

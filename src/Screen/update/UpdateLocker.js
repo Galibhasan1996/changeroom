@@ -20,7 +20,7 @@ const UpdateLocker = () => {
     const insets = useSafeAreaInsets();
     const route = useRoute();
     const { item = {} } = route.params || {};
-    // styleConsole("🚀 ~ UpdateLocker.js:24 ~ UpdateLocker ~ item:", "UpdateLocker", { type }, { item })
+    // styleConsole("🚀 ~ UpdateLocker.js:23 ~ UpdateLocker ~ item:", "UpdateLocker", { item })
 
     const { updateLockerById, loading } = useAuth()
 
@@ -61,7 +61,7 @@ const UpdateLocker = () => {
                 Number(state.shoe_size), Number(state.aadhar),
                 state.address, state.isLeft, item._id, token
             );
-            // styleConsole("🚀 ~ UpdateLocker.js:103 ~ handleUpdateLocker ~ data:", "UpdateLocker", data.updateLocker)
+            // styleConsole("🚀 ~ UpdateLocker.js:64 ~ handleUpdateLocker ~ data:", "UpdateLocker", data.error)
 
 
             if (data.message === "Locker updated successfully") {
@@ -70,9 +70,23 @@ const UpdateLocker = () => {
                 preUpdate(data.previousLocker);
                 goBack()
             } else if (data.errors && Array.isArray(data.errors)) {
-                showToast("error", data.errors[0]?.msg || "An error occurred", data.errors[0]?.msg || "Error");
-            } else if (data.message) {
-                showToast("error", data.message, data.message);
+                return showToast("error", data.errors[0]?.msg || "An error occurred", data.errors[0]?.msg || "Error");
+            }
+
+            const validationErrors = {
+                "Validation failed: role: Invalid employer value": ["You Entered Invalid Role", "Please Enter Valid Role"],
+                "Validation failed: department: Invalid department value": ["You Entered Invalid department", "Please Enter Valid department"],
+                "Validation failed: shoe_size: Shoe size must be between 3 and 12": ["Shoe size should be between 3 and 12", "Invalid shoe size"],
+                "Validation failed: aadhar: Aadhar number must be exactly 12 digits": ["Invalid aadhar number", "Aadhar number should be 12 digits"],
+                "Validation failed: mobile: Mobile number must be exactly 10 digits": ["Invalid mobile number", "Mobile number should be 10 digits"]
+            };
+
+            const errorMsg = validationErrors[data.error];
+            if (errorMsg) {
+                return showToast("error", errorMsg[0], errorMsg[1]);
+            }
+            else {
+                return showToast("success", data.message, data.message);
             }
         } catch (error) {
             showToast("error", "Update failed", error.message || "An error occurred");

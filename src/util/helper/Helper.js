@@ -2,7 +2,7 @@ import { PermissionsAndroid, Platform } from "react-native";
 import { launchCamera } from "react-native-image-picker";
 import Toast from "react-native-toast-message";
 const MID = 212
-const PORT = 163
+const PORT = 39
 // -----------for real device---------------
 export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `https://changeroombackend.onrender.com/api/v1/`
 // export const BASE_URL = `https://changeroombackend.onrender.com/api/v1/`
@@ -43,14 +43,6 @@ export const requestCameraPermission = async () => {
 };
 
 
-
-// export const showToast = (type, text1, text2,) => {
-//     Toast.show({
-//         type: type,
-//         text1: text1,
-//         text2: text2,
-//     })
-// }
 
 export const showToast = (type, text1, text2, position = "top", topOffset = 40, bottomOffset = 40, keyboardOffset = 10) => {
     const options = {
