@@ -4,8 +4,8 @@ import Toast from "react-native-toast-message";
 const MID = 212
 const PORT = 39
 // -----------for real device---------------
-export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `https://changeroombackend.onrender.com/api/v1/`
-// export const BASE_URL = `https://changeroombackend.onrender.com/api/v1/`
+export const BASE_URL = Platform.OS === "android" ? `http://192.168.${MID}.${PORT}:3000/api/v1/` : `http://192.168.${MID}.${PORT}:3000/api/v1/`
+
 
 
 export const styleConsole = (message, WhatCall, ...data) => {
